@@ -21,5 +21,12 @@ function initClient() {
         discoveryDocs: DISCOVERY_DOCS,
         clientId: CLIENT_ID,
         scope: SCOPES
+    }).then(() => {
+        // Listen for sign in state changes
+        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+        // Handle initial sign in state
+        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        authorizeButton.onClick = handleAuthClick;
+        signoutButton.onclick = handleSignoutClick;
     });
 }
