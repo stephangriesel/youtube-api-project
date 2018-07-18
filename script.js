@@ -10,6 +10,8 @@ const channelForm = document.getElementById('channel-form');
 const channelInput = document.getElementById('channel-input');
 const videoContainer = document.getElementById('video-container');
 
+const defaultChannel = 'stephangriesel';
+
 // Load auth2 library
 function handleClientLoad() {
     gapi.load('client:auth2', initClient);
@@ -29,4 +31,35 @@ function initClient() {
         authorizeButton.onClick = handleAuthClick;
         signoutButton.onclick = handleSignoutClick;
     });
+}
+
+// Update sign in state changes
+function updateSigninStatus(isSignedIn) {
+    if(isSignedIn) {
+        authorizeButton.style.display = 'none';
+        signoutButton.style.display = 'block';
+        content.style.display = 'block';
+        videoContainer.style.display = 'block';
+        getChannel(defaultChannel);
+    } else {
+        authorizeButton.style.display = 'block';
+        signoutButton.style.display = 'none';
+        content.style.display = 'none';
+        videoContainer.style.display = 'none';
+    }
+}
+
+// Login function
+function handleAuthClick() {
+    gapi.auth2.getAuthInstance().signIn();
+}
+
+// Logout function
+function handleSignoutClick() {
+    gapi.auth2.getAuthInstance().signOut();
+}
+
+// Get channel from API function
+function getChannel(channel) {
+    console.log(channel);
 }
