@@ -1,5 +1,9 @@
+// Keys
+var secretId = config.SECRET_ID;
+var secretKey = config.SECRET_KEY;
+
 // Options
-const CLIENT_ID = ''; //client ID, hide from repository
+//const CLIENT_ID = ''; 
 const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
 const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
 
@@ -9,6 +13,7 @@ const content = document.getElementById('content');
 const channelForm = document.getElementById('channel-form');
 const channelInput = document.getElementById('channel-input');
 const videoContainer = document.getElementById('video-container');
+const loginText = document.getElementById('login-text');
 
 const defaultChannel = 'stephangriesel';
 
@@ -21,7 +26,7 @@ function handleClientLoad() {
 function initClient() {
     gapi.client.init({
         discoveryDocs: DISCOVERY_DOCS,
-        clientId: CLIENT_ID,
+        clientId: secretId,
         scope: SCOPES
     }).then(() => {
         // Listen for sign in state changes
@@ -43,6 +48,7 @@ function updateSigninStatus(isSignedIn) {
         getChannel(defaultChannel);
     } else {
         authorizeButton.style.display = 'block';
+        getElementById.style.display = 'block';
         signoutButton.style.display = 'none';
         content.style.display = 'none';
         videoContainer.style.display = 'none';
